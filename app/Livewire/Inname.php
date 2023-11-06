@@ -36,8 +36,13 @@ class Inname extends Component
     }
 
     // Neem een specifiek apparaat op.
-    public function innemen($id)
+    public function innemen($id = null)
     {
+        if (!$id) {
+            // Voor het geval dat er niks is geselecteerd.
+            return;
+        }
+
         $apparaat = Apparaat::findOrFail($id);
         $this->ingenomen[] = $apparaat;
         $this->totaalbedrag += $apparaat->vergoeding;
@@ -87,6 +92,7 @@ class Inname extends Component
         });
 
     }
+
     // Zet alle ingenomen apparaten terug en reset het totaalbedrag.
     public function allesTerugnemen()
     {

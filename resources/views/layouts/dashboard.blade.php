@@ -1,4 +1,15 @@
-<!DOCTYPE html>
+@php
+    $rolWaarde = Auth::user()->rol->waarde;
+
+    // Laad de permissies uit de config
+    $PERMISSION_INNAME = config('permissions.PERMISSION_INNAME');
+    $PERMISSION_VERWERKING = config('permissions.PERMISSION_VERWERKING');
+    $PERMISSION_UITGIFTE = config('permissions.PERMISSION_UITGIFTE');
+    $PERMISSION_RAPPORTAGE = config('permissions.PERMISSION_RAPPORTAGE');
+    $PERMISSION_ONDERHOUD = config('permissions.PERMISSION_ONDERHOUD');
+    $PERMISSION_GEBRUIKERSBEHEER = config('permissions.PERMISSION_GEBRUIKERSBEHEER');
+@endphp
+        <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -53,7 +64,7 @@
     <div class="flex items-center">
         <svg height="50px" width="50px" version="1.1" id="_x35_" xmlns="http://www.w3.org/2000/svg"
              xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve" fill="#000000"><g
-                id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    id="SVGRepo_bgCarrier" stroke-width="0"></g>
             <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
             <g id="SVGRepo_iconCarrier">
                 <g>
@@ -77,7 +88,7 @@
     <!-- User Info and Version -->
     <div class="flex items-center text-darkgreen space-x-4">
         <span>Versie: 1.0</span>
-        <span>Ingelogd als {{ Auth::user()->name }}</span>
+        <span>Ingelogd als {{ Auth::user()->naam }}</span>
         <form method="POST" action="{{ route('logout') }}" x-data>
             @csrf
 
@@ -90,38 +101,47 @@
 
 
 </div>
-
 <div class="h-screen flex">
     <div x-data="{ openItem: null, openSubItem: null}" class="relative min-h-screen">
         <!-- Sidebar -->
         <aside class="w-64 h-screen bg-white shadow-md overflow-y-auto">
             <ul class="space-y-2">
-                <li><a href="{{route('inname')}}" class="block px-4 py-2 hover:bg-gray-200">Inname</a></li>
-                <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Rapportage</a></li>
-                <li><a href="{{route('verwerking')}}" class="block px-4 py-2 hover:bg-gray-200">Verwerking</a></li>
-                <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Uitgifte</a></li>
-                <li>
-                    <button @click="openItem = (openItem === 'onderhoud' ? null : 'onderhoud')"
-                            class="flex justify-between w-full px-4 py-2 hover:bg-gray-200">
-                        Onderhoud <span>+</span>
-                    </button>
-                    <ul x-show="openItem === 'onderhoud'" x-cloak class="space-y-2 pl-6">
-                        <li>
-                            <button @click="openSubItem = (openSubItem === 'medewerkers' ? null : 'medewerkers')"
-                                    class="flex justify-between w-full px-4 py-2 hover:bg-gray-200">
-                                Medewerkers <span>+</span>
-                            </button>
-                            <ul x-show="openSubItem === 'medewerkers'" x-cloak class="space-y-2 pl-6">
+                @if ($rolWaarde & $PERMISSION_INNAME)
+                    <li><a href="{{route('inname')}}" class="block px-4 py-2 hover:bg-gray-200">Inname</a></li>
+                @endif
+
+                @if ($rolWaarde & $PERMISSION_VERWERKING)
+                    <li><a href="{{route('verwerking')}}" class="block px-4 py-2 hover:bg-gray-200">Verwerking</a></li>
+                @endif
+
+                @if ($rolWaarde & $PERMISSION_UITGIFTE)
+                    <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Uitgifte</a></li>
+                @endif
+
+                @if ($rolWaarde & $PERMISSION_RAPPORTAGE)
+                    <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Rapportage</a></li>
+                @endif
+
+                @if ($rolWaarde & $PERMISSION_ONDERHOUD)
+                    <li>
+                        <button @click="openItem = (openItem === 'onderhoud' ? null : 'onderhoud')"
+                                class="flex justify-between w-full px-4 py-2 hover:bg-gray-200">
+                            Onderhoud <span>+</span>
+                        </button>
+                        <ul x-show="openItem === 'onderhoud'" x-cloak class="space-y-2 pl-6">
+                            @if ($rolWaarde & $PERMISSION_GEBRUIKERSBEHEER)
+                                <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Gebruikersbeheer</a></li>
+                            @endif
                                 <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Rollen</a></li>
-                                <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Gebruikers</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Gebruikers</a></li>
-                        <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Rollen</a></li>
-                        <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Apparaten</a></li>
-                        <li><a href="{{ route('onderdelen') }}" class="block px-4 py-2 hover:bg-gray-200">Onderdelen</a></li>
-                    </ul>
-                </li>
+                                <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Apparaten</a></li>
+                                <li><a href="{{ route('onderdelen') }}" class="block px-4 py-2 hover:bg-gray-200">Onderdelen</a>
+                                </li>
+
+
+
+                        </ul>
+                    </li>
+                @endif
             </ul>
         </aside>
     </div>

@@ -16,6 +16,7 @@ class OnderdeelToevoegen extends Component
     public function save()
     {
 
+
         Onderdeel::create([
             'naam' => $this->naam,
             'omschrijving' => $this->omschrijving,

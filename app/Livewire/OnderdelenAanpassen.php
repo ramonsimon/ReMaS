@@ -37,7 +37,7 @@ class OnderdelenAanpassen extends Component
             'prijs_per_kg' => $this->prijs_per_kg
         ]);
 
-        session()->flash('message', 'Onderdeel bijgewerkt!');
+        return redirect()->route('onderdelen');
     }
 
     public function render()

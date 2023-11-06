@@ -24,10 +24,25 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'naam', 'emailadres', 'wachtwoord', 'rol_id'
     ];
+
+    public function getAuthPassword()
+    {
+        return $this->wachtwoord;
+    }
+
+    public function rol()
+    {
+        return $this->belongsTo(Rol::class, 'rol_id');
+    }
+
+
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['wachtwoord'] = hash('sha256', $value);
+    }
+
 
     /**
      * The attributes that should be hidden for serialization.
@@ -58,4 +73,7 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    protected $table = 'medewerkers';
+
 }

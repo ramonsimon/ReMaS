@@ -1,0 +1,10 @@
+<?php
+
+return [
+    'PERMISSION_INNAME' => 1 << 0,
+    'PERMISSION_VERWERKING' => 1 << 1,
+    'PERMISSION_UITGIFTE' => 1 << 2,
+    'PERMISSION_RAPPORTAGE' => 1 << 3,
+    'PERMISSION_ONDERHOUD' => 1 << 4,
+    'PERMISSION_GEBRUIKERSBEHEER' => 1 << 5,
+];

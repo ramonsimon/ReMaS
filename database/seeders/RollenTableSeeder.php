@@ -17,46 +17,37 @@ class RollenTableSeeder extends Seeder
     {
         DB::table('rollen')->insert([
             [
-                'naam' => 'inwoner gemeente',
-                'omschrijving' => 'Inwoner van de gemeente',
-                'waarde' => 1,
+                'naam' => 'Algemene medewerker',
+                'omschrijving' => 'Heeft toegang tot rapportage functies',
+                'waarde' => 8,
             ],
             [
-                'naam' => 'medewerker inname',
-                'omschrijving' => 'Medewerker verantwoordelijk voor inname',
-                'waarde' => 2,
+                'naam' => 'Medewerker Inname',
+                'omschrijving' => 'Verantwoordelijk voor inname en heeft toegang tot rapportage functies',
+                'waarde' => 9,
             ],
             [
-                'naam' => 'medewerker demontage',
-                'omschrijving' => 'Medewerker verantwoordelijk voor demontage',
-                'waarde' => 3,
+                'naam' => 'Medewerker Verwerking',
+                'omschrijving' => 'Verantwoordelijk voor verwerking, uitgifte en heeft toegang tot rapportage functies',
+                'waarde' => 14,
             ],
             [
-                'naam' => 'medewerker uitgifte',
-                'omschrijving' => 'Medewerker verantwoordelijk voor uitgifte',
-                'waarde' => 4,
+                'naam' => 'Medewerker Uitgifte',
+                'omschrijving' => 'Verantwoordelijk voor uitgifte en heeft toegang tot rapportage functies',
+                'waarde' => 12,
             ],
             [
-                'naam' => 'opkoper van de onderdelen',
-                'omschrijving' => 'Opkoper die onderdelen koopt',
-                'waarde' => 5,
-            ],
-            [
-                'naam' => 'beleidsmedewerker gemeente',
-                'omschrijving' => 'Medewerker die beleid bepaalt binnen de gemeente',
-                'waarde' => 6,
+                'naam' => 'Applicatiebeheerder',
+                'omschrijving' => 'Heeft toegang tot alle functies behalve gebruikersbeheer',
+                'waarde' => 15,
             ],
             [
                 'naam' => 'Administrator',
-                'omschrijving' => 'Beheerder van het systeem',
-                'waarde' => 7,
-            ],
-            [
-                'naam' => 'medewerker gemeente',
-                'omschrijving' => 'Algemene medewerker binnen de gemeente',
-                'waarde' => 8,
+                'omschrijving' => 'Heeft volledige toegang tot alle functies',
+                'waarde' => 63,
             ],
         ]);
+
     }
 
 }

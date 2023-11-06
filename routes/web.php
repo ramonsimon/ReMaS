@@ -29,7 +29,5 @@ Route::middleware([
     Route::get('/onderdelen', \App\Livewire\Onderdelen::class)->name('onderdelen');
     Route::get('/onderdelen/aanpassen/{id}', \App\Livewire\OnderdelenAanpassen::class)->name('onderdelenaanpassen');
     Route::get('onderdelen/toevoegen', \App\Livewire\OnderdeelToevoegen::class)->name('onderdeeltoevoegen');
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+
 });

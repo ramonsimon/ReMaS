@@ -16,23 +16,48 @@ class MedewerkersTableSeeder extends Seeder
     {
         DB::table('medewerkers')->insert([
             [
-                'rol_id' => 2,  // bijvoorbeeld medewerker inname
+                // Algemene medewerker
+                'rol_id' => 1,
                 'naam' => 'Johan de Vries',
-                'wachtwoord' => Hash::make('wachtwoord123'),  // Voorbeeld wachtwoord
+                'wachtwoord' => Hash::make('wachtwoord123'),
                 'emailadres' => 'johan.devries@example.com',
             ],
             [
-                'rol_id' => 3,  // bijvoorbeeld medewerker demontage
+                // Medewerker Inname
+                'rol_id' => 2,
                 'naam' => 'Els van Dijk',
-                'wachtwoord' => Hash::make('elsDijk2023'),  // Voorbeeld wachtwoord
+                'wachtwoord' => Hash::make('elsDijk2023'),
                 'emailadres' => 'els.vandijk@example.com',
             ],
             [
-                'rol_id' => 4,  // bijvoorbeeld medewerker uitgifte
+                // Medewerker Verwerking
+                'rol_id' => 3,
                 'naam' => 'Pieter Bakker',
-                'wachtwoord' => Hash::make('pieterBakker!'),  // Voorbeeld wachtwoord
+                'wachtwoord' => Hash::make('wachtwoord123'),
                 'emailadres' => 'pieter.bakker@example.com',
             ],
-            ]);
+            [
+                // Medewerker Uitgifte
+                'rol_id' => 4,
+                'naam' => 'Anna Jansen',
+                'wachtwoord' => Hash::make('wachtwoord123'),
+                'emailadres' => 'anna.jansen@example.com',
+            ],
+            [
+                // Applicatiebeheerder
+                'rol_id' => 5,
+                'naam' => 'David Smit',
+                'wachtwoord' => Hash::make('wachtwoord123'),
+                'emailadres' => 'david.smit@example.com',
+            ],
+            [
+                // Administrator
+                'rol_id' => 6,
+                'naam' => 'Linda de Boer',
+                'wachtwoord' => Hash::make('wachtwoord123'),
+                'emailadres' => 'linda.deboer@example.com',
+            ],
+        ]);
+
     }
 }
