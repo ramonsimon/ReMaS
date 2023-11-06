@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('omschrijving', 200)->nullable();
             $table->integer('voorraad_kg');
             $table->decimal('prijs_per_kg');
+            $table->timestamps();
         });
 
 

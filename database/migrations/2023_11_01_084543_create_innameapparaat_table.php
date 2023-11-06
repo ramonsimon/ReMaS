@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('inname_id')->constrained('innames');
             $table->foreignId('apparaat_id')->constrained('apparaten');
             $table->boolean('ontleed')->default(false);
+            $table->timestamps();
         });
     }
 

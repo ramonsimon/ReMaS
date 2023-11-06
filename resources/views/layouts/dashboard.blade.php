@@ -9,6 +9,8 @@
 
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -87,52 +89,50 @@
     </div>
 
 
-
 </div>
 
 <div class="h-screen flex">
     <div x-data="{ openItem: null, openSubItem: null}" class="relative min-h-screen">
-    <!-- Sidebar -->
-    <aside class="w-64 h-screen bg-white shadow-md overflow-y-auto">
-        <ul class="space-y-2">
-            <li><a href="{{route('inname')}}" class="block px-4 py-2 hover:bg-gray-200">Inname</a></li>
-            <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Rapportage</a></li>
-            <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Verwerking</a></li>
-            <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Uitgifte</a></li>
-            <li>
-                <button @click="openItem = (openItem === 'onderhoud' ? null : 'onderhoud')"
-                        class="flex justify-between w-full px-4 py-2 hover:bg-gray-200">
-                    Onderhoud <span>+</span>
-                </button>
-                <ul x-show="openItem === 'onderhoud'" x-cloak class="space-y-2 pl-6">
-                    <li>
-                        <button @click="openSubItem = (openSubItem === 'medewerkers' ? null : 'medewerkers')"
-                                class="flex justify-between w-full px-4 py-2 hover:bg-gray-200">
-                            Medewerkers <span>+</span>
-                        </button>
-                        <ul x-show="openSubItem === 'medewerkers'" x-cloak class="space-y-2 pl-6">
-                            <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Rollen</a></li>
-                            <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Gebruikers</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Gebruikers</a></li>
-                    <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Rollen</a></li>
-                    <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Apparaten</a></li>
-                </ul>
-            </li>
-
-            <!-- Voeg hier extra menu items toe, met of zonder submenus -->
-        </ul>
-    </aside>
+        <!-- Sidebar -->
+        <aside class="w-64 h-screen bg-white shadow-md overflow-y-auto">
+            <ul class="space-y-2">
+                <li><a href="{{route('inname')}}" class="block px-4 py-2 hover:bg-gray-200">Inname</a></li>
+                <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Rapportage</a></li>
+                <li><a href="{{route('verwerking')}}" class="block px-4 py-2 hover:bg-gray-200">Verwerking</a></li>
+                <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Uitgifte</a></li>
+                <li>
+                    <button @click="openItem = (openItem === 'onderhoud' ? null : 'onderhoud')"
+                            class="flex justify-between w-full px-4 py-2 hover:bg-gray-200">
+                        Onderhoud <span>+</span>
+                    </button>
+                    <ul x-show="openItem === 'onderhoud'" x-cloak class="space-y-2 pl-6">
+                        <li>
+                            <button @click="openSubItem = (openSubItem === 'medewerkers' ? null : 'medewerkers')"
+                                    class="flex justify-between w-full px-4 py-2 hover:bg-gray-200">
+                                Medewerkers <span>+</span>
+                            </button>
+                            <ul x-show="openSubItem === 'medewerkers'" x-cloak class="space-y-2 pl-6">
+                                <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Rollen</a></li>
+                                <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Gebruikers</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Gebruikers</a></li>
+                        <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Rollen</a></li>
+                        <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Apparaten</a></li>
+                        <li><a href="{{ route('onderdelen') }}" class="block px-4 py-2 hover:bg-gray-200">Onderdelen</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </aside>
     </div>
-<!-- Main Content -->
-<div class="flex-1 p-6">
-    <main>
-        {{ $slot }}
-    </main>
+    <!-- Main Content -->
+    <div class="flex-1 p-6">
+        <main>
+            {{ $slot }}
+        </main>
 
-    @yield('content')
-</div>
+        @yield('content')
+    </div>
 
 </div>
 

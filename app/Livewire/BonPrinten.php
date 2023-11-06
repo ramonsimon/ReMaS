@@ -2,27 +2,25 @@
 
 namespace App\Livewire;
 
+use App\Models\InnameApparaat;
 use Livewire\Component;
 
 class BonPrinten extends Component
 {
 
-    public function printReceipt()
+    public $inname;
+    public $ingenomenItems;
+
+    // Hier haal ik de ID uit de route koppel het aan de DB en zet het in public.
+    public function mount(\App\Models\Inname $inname)
     {
-        // Logica voor printen
-        $window = 'window.open("", "PRINT", "height=400,width=600");';
-        $window .= 'window.document.write("<html><head><title>Receipt</title></head><body>");';
-        $window .= 'window.document.write(document.getElementById("printArea").outerHTML);';
-        $window .= 'window.document.write("</body></html>");';
-        $window .= 'window.document.close();';
-        $window .= 'window.print();';
-
-        $this->dispatchBrowserEvent('print-receipt', ['script' => $window]);
+        $this->inname = $inname;
+        $this->ingenomenItems = $inname->apparaten;
     }
-
 
     public function render()
     {
+
         return view('livewire.bon-printen');
     }
 }

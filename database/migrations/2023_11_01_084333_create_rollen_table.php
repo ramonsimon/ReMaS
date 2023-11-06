@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('naam', 40)->unique();
             $table->string('omschrijving', 200)->nullable();
             $table->integer('waarde');
+            $table->timestamps();
         });
 
     }

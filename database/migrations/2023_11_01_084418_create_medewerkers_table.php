@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('naam', 40);
             $table->string('wachtwoord', 64);  // SHA256 hash length is 64 characters
             $table->string('emailadres', 100)->unique();
+            $table->timestamps();
         });
 
     }

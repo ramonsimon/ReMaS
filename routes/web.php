@@ -24,7 +24,11 @@ Route::middleware([
 ])->group(function () {
     Route::get('/', Homepage::class)->name('homepage');
     Route::get('/inname', \App\Livewire\Inname::class)->name('inname');
-    Route::get('/bon', \App\Livewire\BonPrinten::class)->name('bon');
+    Route::get('/bon/{inname}', \App\Livewire\BonPrinten::class)->name('bon');
+    Route::get('/verwerking', \App\Livewire\Verwerking::class)->name('verwerking');
+    Route::get('/onderdelen', \App\Livewire\Onderdelen::class)->name('onderdelen');
+    Route::get('/onderdelen/aanpassen/{id}', \App\Livewire\OnderdelenAanpassen::class)->name('onderdelenaanpassen');
+    Route::get('onderdelen/toevoegen', \App\Livewire\OnderdeelToevoegen::class)->name('onderdeeltoevoegen');
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');

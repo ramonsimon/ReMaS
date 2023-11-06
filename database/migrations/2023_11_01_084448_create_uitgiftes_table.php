@@ -18,6 +18,7 @@ return new class extends Migration
             $table->timestamp('tijdstip')->useCurrent();
             $table->integer('gewicht_kg');
             $table->decimal('prijs');
+            $table->timestamps();
         });
 
     }

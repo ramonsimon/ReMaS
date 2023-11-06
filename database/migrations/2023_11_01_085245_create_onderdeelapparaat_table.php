@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('onderdeel_id')->constrained('onderdelen');
             $table->foreignId('apparaat_id')->constrained('apparaten');
             $table->integer('percentage')->nullable();
+            $table->timestamps();
         });
 
     }
