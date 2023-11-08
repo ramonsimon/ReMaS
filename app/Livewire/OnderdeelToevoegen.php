@@ -16,23 +16,21 @@ class OnderdeelToevoegen extends Component
     public function save()
     {
 
-
-        Onderdeel::create([
-            'naam' => $this->naam,
-            'omschrijving' => $this->omschrijving,
-            'voorraad_kg' => $this->voorraad_kg,
-            'prijs_per_kg' => $this->prijs_per_kg,
+        // Valideer de input velden
+        $validatedData = $this->validate([
+            'naam' => 'required|unique:onderdelen,naam',
+            'omschrijving' => 'required',
+            'voorraad_kg' => 'required|numeric',
+            'prijs_per_kg' => 'required|numeric',
         ]);
+
+        // Maak een nieuw onderdeel aan met de gevalideerde gegevens
+        Onderdeel::create($validatedData);
 
 
         // redirect naar onderdelen
         $this->redirect(route('onderdelen'));
     }
-
-
-
-
-
     public function render()
     {
         return view('livewire.onderdeel-toevoegen');

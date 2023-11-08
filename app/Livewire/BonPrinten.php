@@ -11,13 +11,33 @@ class BonPrinten extends Component
     public $inname;
     public $ingenomenItems;
 
-    // Hier haal ik de ID uit de route koppel het aan de DB en zet het in public.
+    // Haal de Inname uit de database met de id in de route
     public function mount(\App\Models\Inname $inname)
     {
         $this->inname = $inname;
-        $this->ingenomenItems = $inname->apparaten;
+        $this->ingenomenItems = $this->ingenomenItems();
+
     }
 
+    protected function ingenomenItems()
+    {
+        // Haal alle apparaten die gekoppeld zijn aan de inname_id en groepeer
+        // de apparaten met dezelfde id
+        return InnameApparaat::with('apparaat')
+            ->where('inname_id', $this->inname->id)
+            ->get()
+            ->groupBy('apparaat_id')
+            ->map(function ($item, $key) {
+                $eersteItem = $item->first();
+                return [
+                    'naam' => $eersteItem->apparaat->naam,
+                    'vergoeding' => $eersteItem->apparaat->vergoeding,
+                    'aantal' => $item->count(),
+                    'totaal' => $eersteItem->apparaat->vergoeding * $item->count()
+                ];
+            })
+            ->values();
+    }
     public function render()
     {
 

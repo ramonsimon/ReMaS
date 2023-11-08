@@ -44,24 +44,55 @@ class Inname extends Component
         }
 
         $apparaat = Apparaat::findOrFail($id);
-        $this->ingenomen[] = $apparaat;
+        $gevondenIndex = null;
+
+        // Controleer of het apparaat al in de lijst staat
+        foreach ($this->ingenomen as $index => $item) {
+            if ($item['apparaat']->id === $id) {
+                $gevondenIndex = $index;
+                break;
+            }
+        }
+
+        // Als het apparaat al in de lijst staat, verhoog dan alleen het aantal.
+        if ($gevondenIndex !== null) {
+            $this->ingenomen[$gevondenIndex]['aantal']++;
+        } else {
+            // Zo niet, voeg het apparaat toe met aantal 1
+            $this->ingenomen[] = ['apparaat' => $apparaat, 'aantal' => 1];
+        }
+
+        // Update het totaalbedrag
         $this->totaalbedrag += $apparaat->vergoeding;
     }
 
-    // Neem het geselecteerde ingenomen apparaat terug.
+
+    // Neem het geselecteerde ingenomen apparaat terug
     public function terugnemen()
     {
         $index = $this->geselecteerdIngenomenApparaat['index'];
 
-        // Als het apparaat gevonden is, neem het dan terug en update het totaalbedrag.
         if ($index !== null && isset($this->ingenomen[$index])) {
-            $this->totaalbedrag -= $this->ingenomen[$index]->vergoeding;
-            array_splice($this->ingenomen, $index, 1);
-            $this->geselecteerdIngenomenApparaat = ['index' => null, 'id' => null]; // Reset the selection after taking back
+            $apparaatVergoeding = $this->ingenomen[$index]['apparaat']->vergoeding;
+
+            // als er maar een apparaat aanwezig is, verlaag het totaalbedrag
+            if ($this->ingenomen[$index]['aantal'] > 1) {
+                $this->ingenomen[$index]['aantal']--;
+                $this->totaalbedrag -= $apparaatVergoeding;
+            } else {
+                // Verlaag het totaalbedrag
+                $this->totaalbedrag -= $apparaatVergoeding;
+                // wanneer er maar 1 is, verwijder het helemaal
+                array_splice($this->ingenomen, $index, 1);
+            }
+            //Reset de selectie
+            $this->geselecteerdIngenomenApparaat = ['index' => null, 'id' => null];
         }
     }
 
-    // Slaat de ingenomen apparaten onder de betreffende medewerker en stuur de gebruiker door naar de bon.
+
+
+    // Slaat de ingenomen apparaten op aan de betreffende medewerker
     public function innemenEnOpslaan()
     {
         $medewerker = Medewerker::find($this->medewerker_id);
@@ -70,9 +101,9 @@ class Inname extends Component
         if (!$medewerker) {
             return;
         }
+
         // Start database transactie
         DB::transaction(function () use ($medewerker) {
-
             // Sla de Inname op
             $inname = \App\Models\Inname::create([
                 'medewerker_id' => $medewerker->id,
@@ -80,25 +111,26 @@ class Inname extends Component
             ]);
 
             // Loop door elk ingenomen apparaat en sla het op.
-            foreach ($this->ingenomen as $apparaat) {
-                InnameApparaat::create([
-                    'inname_id' => $inname->id,
-                    'apparaat_id' => $apparaat->id,
-                    'ontleed' => false,
-                ]);
+            foreach ($this->ingenomen as $ingenomenItem) {
+                for ($i = 0; $i < $ingenomenItem['aantal']; $i++) {
+                    InnameApparaat::create([
+                        'inname_id' => $inname->id,
+                        'apparaat_id' => $ingenomenItem['apparaat']->id,
+                        'ontleed' => false,
+                    ]);
+                }
             }
+
+            // redirect naar de bonpagina
             return redirect()->route('bon', ['inname' => $inname]);
 
         });
 
     }
-
     // Zet alle ingenomen apparaten terug en reset het totaalbedrag.
     public function allesTerugnemen()
     {
         $this->ingenomen = [];
         $this->totaalbedrag = 0.00;
     }
-
-
 }

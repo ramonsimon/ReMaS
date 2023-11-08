@@ -17,6 +17,11 @@ class InnameApparaat extends Model
         return $this->belongsToMany(Inname::class, 'inname_apparaat', 'apparaat_id', 'inname_id');
     }
 
+    public function apparaat()
+    {
+        return $this->belongsTo(Apparaat::class);
+    }
+
 
 
 }

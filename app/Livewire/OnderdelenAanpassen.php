@@ -14,7 +14,7 @@ class OnderdelenAanpassen extends Component
     public $prijs_per_kg;
     public $onderdeelId;
 
-
+    // Haalt de gegevens op uit de database met hulp van de id die mee wordt gegeven met de url
     public function mount($id)
     {
         $onderdeel = Onderdeel::find($id);
@@ -26,16 +26,27 @@ class OnderdelenAanpassen extends Component
         $this->prijs_per_kg = $onderdeel->prijs_per_kg;
     }
 
+    // slaat de gegevens op
     public function save()
     {
+
+        $this->validate([
+            'naam' => 'required',
+            'omschrijving' => 'required',
+            'voorraad_kg' => 'required|numeric',
+            'prijs_per_kg' => 'required|numeric',
+        ]);
+
         $onderdeel = Onderdeel::find($this->onderdeelId);
 
-        $onderdeel->update([
-            'naam' => $this->naam,
-            'omschrijving' => $this->omschrijving,
-            'voorraad_kg' => $this->voorraad_kg,
-            'prijs_per_kg' => $this->prijs_per_kg
-        ]);
+        if ($onderdeel) {
+            $onderdeel->update([
+                'naam' => $this->naam,
+                'omschrijving' => $this->omschrijving,
+                'voorraad_kg' => $this->voorraad_kg,
+                'prijs_per_kg' => $this->prijs_per_kg,
+            ]);
+        }
 
         return redirect()->route('onderdelen');
     }
